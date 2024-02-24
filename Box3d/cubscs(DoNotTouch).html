@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #364C64;
+    }
+
+    .text {
+        font-weight: bold;
+        font-family: Arial;
+        text-transform: uppercase;
+    }
+
+    .container {
+        perspective: 2000px;
+
+    }
+
+    .cube {
+        position: relative;
+        width: 300px;
+        height: 500px;
+        transform-style: preserve-3d;
+        animation: spin 18s linear infinite;
+        animation-direction: alternate-reverse;
+        background-color:transparent !important;
+    }
+
+    .cube__face {
+        position: absolute;
+        width: 80%;
+        height: 80%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 1;
+        color: white;
+        font-size: 24px;
+        text-align: center;
+        background-color: #FE5000;
+        /* box-shadow: inset 0 0 100px black;
+        outline: 1px solid #02203c; */
+    }
+
+    .cube__face img {
+        max-width: 100%;
+    }
+
+    .cube-face--left {
+        transform: rotateY(-90deg) translateZ(150px);
+        height: 500px;
+    }
+
+    .cube-face--front {
+        transform: rotateY(0deg) translateZ(150px);
+        height: 500px;
+    }
+
+    .cube-face--back {
+        transform: rotateY(180deg) translateZ(150px);
+        height: 500px;
+    }
+
+    .cube-face--right {
+        transform: rotateY(90deg) translateZ(150px);
+        height: 500px;
+    }
+
+    .cube-face--top {
+        transform: rotateX(90deg) translateZ(150px);
+        width:250px;
+        height:200px;
+    }
+
+    .cube-face--bottom {
+        /* transform: rotateX(-90deg) translateZ(150px); */
+        transform: rotateX(-90deg) translateZ(450px);
+        width:250px;
+        height:200px;
+    }
+
+    .shadow {
+        outline: none;
+        background: rgba(0, 0, 0, 0);
+        box-shadow: 0 0 100px #000;
+    }
+
+    @keyframes spin {
+        from {
+            transform: rotateY(0deg);
+        }
+
+        to {
+            transform: rotateY(360deg);
+        }
+    }
+
+    .text-white{
+        color:white;
+        margin:10px;
+        font-size: 15px;;
+    }
+    .vertical{
+        display: flex;
+  flex-direction: column;
+  justify-content: end;
+  position: absolute;
+  top: 46%;
+  left: 60%;
+  transform: translate(40%, -50%);
+
+    }
+
+    div>label>.text-white{
+        margin-bottom: 10px;;
+    }
+</style>
+
+<body>
+ <!-- cube structure -->
+        <div class="container">
+            <div class="cube" >
+                <div class="cube__face cube-face--bottom shadow" >
+                    <img src="./Odonto-Box/Odonto-Box.png" alt="Bottom shadow" />
+                </div>
+                <div class="cube__face cube-face--left" id="leftFace">
+                    <img src="Odonto-Box/Odonto-Box-Left.png" alt="left" />
+                </div>
+                <div class="cube__face cube-face--front" id="frontFace">
+                    <img src="Odonto-Box/Odonto-Box-Front.png" alt="front" />
+                </div>
+                <div class="cube__face cube-face--back" id="backFace">
+                    <img src="Odonto-Box/Odonto-Box-Back.png" alt="back" />
+                </div>
+                <div class="cube__face cube-face--right" id="rightFace">
+                    <img src="Odonto-Box/Odonto-Box-Right.png" alt="right" />
+                </div>
+                <div class="cube__face cube-face--top" id="topFace">
+                    <img src="Odonto-Box/Odonto-Box-Top.png" alt="top" />
+                </div>
+                <div class="cube__face cube-face--bottom" id="bottomFace">
+                    <img src="Odonto-Box/Odonto-Box-Front-bottom-Weblink.png" alt="Adobe XD" />
+                </div>
+            </div>
+        </div>
+   
+<!-- File Input  for uploading images -->
+   <div class="vertical">
+    <div>
+        <label for="" class="text-white">FrontPage: </label>
+        <input type="file" accept="image/*" onchange="displayImage(event, 'frontFace')">
+    </div>
+    <div>
+        <label for="" class="text-white">LeftPage: </label>
+        <input type="file" accept="image/*" onchange="displayImage(event, 'leftFace')">
+    </div>
+    <div>
+        <label for="" class="text-white">BackPage: </label>
+        <input type="file" accept="image/*" onchange="displayImage(event, 'backFace')">
+    </div>
+    <div>
+        <label for="" class="text-white">RightPage: </label>
+        <input type="file" accept="image/*" onchange="displayImage(event, 'rightFace')">
+    </div>
+    <div>
+        <label for="" class="text-white">TopPage: </label>
+        <input type="file" accept="image/*" onchange="displayImage(event, 'topFace')">
+    </div>
+    <div>
+        <label for="" class="text-white">BottomPage: </label>
+        <input type="file" accept="image/*" onchange="displayImage(event, 'bottomFace')">
+    </div>
+        
+   </div>
+   
+
+    <!-- <script>
+        const allDivs = document.querySelectorAll("div");
+        allDivs.forEach(div => {
+            div.style.backgroundColor = "red";
+        });
+    </script> -->
+
+    <script>
+        const allDivs = document.querySelectorAll("div");
+        const userColor = prompt("Enter a color (e.g., red, blue, #ff0000):");
+        
+        allDivs.forEach(div => {
+            div.style.backgroundColor = userColor;
+        });
+    </script>
+    <script>
+        function displayImage(event, faceId) {
+            const face = document.getElementById(faceId);
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function() {
+                face.style.backgroundImage = `url('${reader.result}')`;
+                face.style.backgroundRepeat = 'no-repeat';
+            };
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+
+</body>
+
+</html>

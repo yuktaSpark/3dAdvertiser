@@ -1,0 +1,195 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .scene {
+        width: 200px;
+        height: 200px;
+        perspective: 600px;
+    }
+
+    .cube {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transform-style: preserve-3d;
+    }
+
+    .cube__face {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+    }
+
+    .cube__face--front {
+        background-color: blueviolet;
+    }
+
+    .cube__face--back {
+        background-color: brown;
+    }
+
+    .cube__face--right {
+        background-color: aquamarine;
+    }
+
+    .cube__face--left {
+        background-color: yellow;
+    }
+
+    .cube__face--top {
+        background-color: crimson;
+    }
+
+    .cube__face--bottom {
+        background-color: darkgreen;
+    }
+
+    /* .cube__face--front  { transform: rotateY(  0deg); }
+.cube__face--right  { transform: rotateY( 90deg); }
+.cube__face--back   { transform: rotateY(180deg); }
+.cube__face--left   { transform: rotateY(-90deg); }
+.cube__face--top    { transform: rotateX( 90deg); }
+.cube__face--bottom { transform: rotateX(-90deg); } */
+
+    /* .cube__face--front  { transform: rotateY(  0deg) translateZ(100px); }
+.cube__face--right  { transform: rotateY( 90deg) translateZ(100px); }
+.cube__face--back   { transform: rotateY(180deg) translateZ(100px); }
+.cube__face--left   { transform: rotateY(-90deg) translateZ(100px); }
+.cube__face--top    { transform: rotateX( 90deg) translateZ(100px); }
+.cube__face--bottom { transform: rotateX(-90deg) translateZ(100px); } */
+
+    .cube.show-front {
+        transform: translateZ(-100px) rotateY(0deg);
+    }
+
+    .cube.show-right {
+        transform: translateZ(-100px) rotateY(-90deg);
+    }
+
+    .cube.show-back {
+        transform: translateZ(-100px) rotateY(-180deg);
+    }
+
+    .cube.show-left {
+        transform: translateZ(-100px) rotateY(90deg);
+    }
+
+    .cube.show-top {
+        transform: translateZ(-100px) rotateX(-90deg);
+    }
+
+    .cube.show-bottom {
+        transform: translateZ(-100px) rotateX(90deg);
+    }
+
+    .cube {
+        transform: translateZ(-100px);
+    }
+
+    .cube {
+        transition: transform 1s;
+    }
+</style>
+
+<body>
+    <div class="scene">
+        <div class="cube">
+            <div class="cube__face cube__face--front">front</div>
+            <div class="cube__face cube__face--back">back</div>
+            <div class="cube__face cube__face--right">right</div>
+            <div class="cube__face cube__face--left">left</div>
+            <div class="cube__face cube__face--top">top</div>
+            <div class="cube__face cube__face--bottom">bottom</div>
+        </div>
+    </div>
+</body>
+
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Prism with Cursor Move</title>
+<style>
+    .prism {
+        width: 200px;
+        height: 200px;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 0.5s ease;
+       margin-left: 50%;
+       margin-top: 10%;
+    }
+    
+    .face {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        background: rgba(255, 0, 0, 0.5);
+       border:1px solid white;
+    }
+    
+    .front  { transform: translateZ(100px); }
+    .back   { transform: rotateY(180deg) translateZ(100px); }
+    .top    { transform: rotateX(90deg) translateZ(100px); }
+    .bottom { transform: rotateX(-90deg) translateZ(100px); }
+    .left   { transform: rotateY(-90deg) translateZ(100px); }
+    .right  { transform: rotateY(90deg) translateZ(100px); }
+
+
+    /* .front {
+        background-color: blueviolet;
+    }
+
+    .back {
+        background-color: brown;
+    }
+
+    .right {
+        background-color: aquamarine;
+    }
+
+    .left {
+        background-color: yellow;
+    }
+
+    .top {
+        background-color: crimson;
+    }
+
+    .bottom {
+        background-color: darkgreen;
+    } */
+</style>
+</head>
+<body>
+<div class="prism " id="prism">
+    <div class="face front">Front</div>
+    <div class="face back">Back</div>
+    <div class="face top">Top</div>
+    <div class="face bottom">Bottom</div>
+    <div class="face left">Left</div>
+    <div class="face right">Right</div>
+</div>
+<script>
+    const prism = document.getElementById('prism');
+    const sensitivity = 0.1;
+
+    document.addEventListener('mousemove', (e) => {
+        const { clientX, clientY } = e;
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        const deltaX = (clientX - centerX) * sensitivity;
+        const deltaY = (clientY - centerY) * sensitivity;
+
+        prism.style.transform = `rotateX(${deltaY}deg) rotateY(${deltaX}deg)`;
+    });
+</script>
+</body>
+</html>

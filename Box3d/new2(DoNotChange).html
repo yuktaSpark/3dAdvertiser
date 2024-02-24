@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Prism with Manual Dimensions using Three.js</title>
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+    </style>
+</head>
+<body >
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Define variables for Three.js
+        let camera, scene, renderer;
+        let prism;
+        let rotateOn = false;
+        let zoomSpeed = 0.0005;
+
+        // Initialize Three.js scene
+        function init() {
+            // Create a scene
+            scene = new THREE.Scene();
+
+            // Create a camera and position it
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(0, 0, 10); 
+            camera.lookAt(0, 0, 0); 
+
+            // Create a renderer
+            renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight); //for consuming browser w*h
+            document.body.appendChild(renderer.domElement); //canva to take space
+
+            // Prompt the user to input cube dimensions
+            const width = parseFloat(window.prompt("Enter the width of the cube:", "5"));
+            const height = parseFloat(window.prompt("Enter the height of the cube:", "3"));
+            const depth = parseFloat(window.prompt("Enter the depth of the cube:", "2"));
+
+            // Create materials for each face
+            const materials = [
+                new THREE.MeshBasicMaterial({ color: 0xff0000 }), // Front
+                new THREE.MeshBasicMaterial({ color: 0x00ff00 }), // Back
+                new THREE.MeshBasicMaterial({ color: 0x0000ff }), // Top
+                new THREE.MeshBasicMaterial({ color: 0xffff00 }), // Bottom
+                new THREE.MeshBasicMaterial({ color: 0xff00ff }), // Left
+                new THREE.MeshBasicMaterial({ color: 0x00ffff })  // Right
+            ];
+
+            const geometry = new THREE.BoxGeometry(width, height, depth);
+
+            // Create a mesh face materials
+            const material = new THREE.MeshFaceMaterial(materials);
+            // Combine geometry and material to create a mesh
+            prism = new THREE.Mesh(geometry, material);
+            scene.add(prism);
+
+            // Add event listener for mouse scroll
+            window.addEventListener('wheel', onWheel, false);
+
+            // Add event listener for mouse click
+            window.addEventListener('click', onClick, false);
+            animate();
+        }
+
+        // Function to handle mouse scroll
+        function onWheel(event) {
+            // Adjust camera position based on scroll direction
+            camera.position.z -= event.deltaY * zoomSpeed;
+        }
+
+        // Function to handle click event
+        function onClick() {
+            rotateOn = !rotateOn; // Toggle rotation on click
+        }
+
+        // Function to animate the scene
+        function animate() {
+            // Rotate the prism if rotateOn is true
+            if (rotateOn) {
+                prism.rotation.y += 0.02; // Rotate around Y-axis
+                prism.rotation.x += 0.005; // Rotate around X-axis
+            }
+            renderer.render(scene, camera);
+
+            requestAnimationFrame(animate);
+        }
+
+        init();
+    </script>
+</body>
+</html>
